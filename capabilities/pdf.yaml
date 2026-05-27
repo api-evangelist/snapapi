@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SnapAPI PDF
+  description: Render any web page to a PDF document using headless Chromium. Supports A4, Letter, Legal, and Tabloid formats plus landscape orientation. Self-contained Naftiko capability covering the SnapAPI PDF business surface.
+  tags:
+    - SnapAPI
+    - PDF
+    - PDF Generation
+    - Headless Chromium
+  created: '2026-05-27'
+  modified: '2026-05-27'
+binds:
+  - namespace: env
+    keys:
+      SNAPAPI_API_KEY: SNAPAPI_API_KEY
+capability:
+  consumes:
+    - type: http
+      namespace: snapapi-pdf
+      baseUri: https://snap.michaelcli.com
+      description: SnapAPI PDF generation business capability. Self-contained, no shared references.
+      resources:
+        - name: pdf
+          path: /api/pdf
+          operations:
+            - name: generatePdf
+              method: POST
+              description: Convert a URL to a PDF document
+              outputRawFormat: binary
+              outputParameters:
+                - name: pdf
+                  type: binary
+                  value: $.
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  description: PDF request body with URL, format, and landscape flag (JSON).
+                  required: true
+      authentication:
+        type: bearer
+        token: '{{env.SNAPAPI_API_KEY}}'
+        header: X-API-Key
+  exposes:
+    - type: rest
+      namespace: snapapi-pdf-rest
+      port: 8080
+      description: REST adapter for SnapAPI PDF. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+      resources:
+        - path: /v1/api/pdf
+          name: pdf
+          description: REST surface for the PDF endpoint.
+          operations:
+            - method: POST
+              name: generatePdf
+              description: Convert a URL to a PDF document
+              call: snapapi-pdf.generatePdf
+              with:
+                body: rest.body
+              outputParameters:
+                - type: binary
+                  mapping: $.
+    - type: mcp
+      namespace: snapapi-pdf-mcp
+      port: 9090
+      transport: http
+      description: MCP adapter for SnapAPI PDF. One tool per consumed operation, routed inline through this capability's consumes block.
+      tools:
+        - name: generate-pdf
+          description: Convert any URL to a PDF document
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: snapapi-pdf.generatePdf
+          with:
+            body: tools.body
+          outputParameters:
+            - type: binary
+              mapping: $.

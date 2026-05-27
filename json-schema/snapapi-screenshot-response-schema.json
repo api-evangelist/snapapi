@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snapapi/main/json-schema/snapapi-screenshot-response-schema.json",
+  "title": "SnapAPI Screenshot Response",
+  "description": "Describes the binary screenshot response and the usage signaling headers returned by POST /api/screenshot. The response body itself is raw PNG or JPEG image data; this schema models the metadata surface.",
+  "type": "object",
+  "properties": {
+    "contentType": {
+      "type": "string",
+      "enum": ["image/png", "image/jpeg"],
+      "description": "MIME type of the returned image."
+    },
+    "headers": {
+      "type": "object",
+      "properties": {
+        "X-Usage-Used": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of requests used this calendar month."
+        },
+        "X-Usage-Limit": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total monthly request allowance for the API key's tier."
+        }
+      }
+    },
+    "body": {
+      "type": "string",
+      "contentEncoding": "base64",
+      "description": "Binary image content (PNG or JPEG)."
+    }
+  }
+}

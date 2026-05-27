@@ -1,0 +1,131 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "snapapi": "https://snap.michaelcli.com/vocab/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+
+    "WebSiteTarget": {
+      "@id": "snapapi:WebSiteTarget",
+      "@context": {
+        "url": {
+          "@id": "schema:url",
+          "@type": "xsd:anyURI"
+        }
+      }
+    },
+
+    "Screenshot": {
+      "@id": "snapapi:Screenshot",
+      "@context": {
+        "url": {
+          "@id": "schema:url",
+          "@type": "xsd:anyURI"
+        },
+        "width": "schema:width",
+        "height": "schema:height",
+        "full_page": "snapapi:fullPage",
+        "format": "schema:encodingFormat",
+        "contentUrl": {
+          "@id": "schema:contentUrl",
+          "@type": "xsd:anyURI"
+        },
+        "image": {
+          "@id": "schema:image",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "Metadata": {
+      "@id": "snapapi:Metadata",
+      "@context": {
+        "url": {
+          "@id": "schema:url",
+          "@type": "xsd:anyURI"
+        },
+        "title": "schema:name",
+        "description": "schema:description",
+        "favicon": {
+          "@id": "snapapi:favicon",
+          "@type": "xsd:anyURI"
+        },
+        "og": "snapapi:openGraph",
+        "twitter": "snapapi:twitterCard",
+        "meta_tags": {
+          "@id": "snapapi:metaTags",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "MetaTag": {
+      "@id": "snapapi:MetaTag",
+      "@context": {
+        "name": "schema:name",
+        "content": "schema:value"
+      }
+    },
+
+    "TextContent": {
+      "@id": "snapapi:TextContent",
+      "@context": {
+        "url": {
+          "@id": "schema:url",
+          "@type": "xsd:anyURI"
+        },
+        "title": "schema:name",
+        "text": "schema:text",
+        "word_count": "schema:wordCount"
+      }
+    },
+
+    "Pdf": {
+      "@id": "snapapi:Pdf",
+      "@context": {
+        "url": {
+          "@id": "schema:url",
+          "@type": "xsd:anyURI"
+        },
+        "format": "snapapi:paperFormat",
+        "landscape": "snapapi:landscape",
+        "encodingFormat": "schema:encodingFormat"
+      }
+    },
+
+    "ApiKey": {
+      "@id": "snapapi:ApiKey",
+      "@context": {
+        "key": "snapapi:key",
+        "name": "schema:name",
+        "email": "schema:email",
+        "tier": "snapapi:tier",
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Usage": {
+      "@id": "snapapi:Usage",
+      "@context": {
+        "tier": "snapapi:tier",
+        "used": "snapapi:used",
+        "limit": "snapapi:limit",
+        "remaining": "snapapi:remaining"
+      }
+    },
+
+    "Plan": {
+      "@id": "snapapi:Plan",
+      "@context": {
+        "name": "schema:name",
+        "price": "schema:price",
+        "priceCurrency": "schema:priceCurrency",
+        "requestsPerMonth": "snapapi:requestsPerMonth"
+      }
+    }
+  }
+}

@@ -1,0 +1,144 @@
+name: SnapAPI Vocabulary
+description: >-
+  Normative vocabulary for SnapAPI, a headless-Chromium-powered REST API for
+  website screenshots, metadata extraction, text extraction, and PDF generation.
+  Covers the SnapAPI request surface, rendering options, usage signaling, and
+  pricing tiers.
+version: "1.0"
+created: "2026-05-27"
+modified: "2026-05-27"
+terms:
+  - term: API Key
+    definition: >-
+      A `snap_`-prefixed secret string issued by POST /api/signup. Passed on every
+      authenticated request via the `X-API-Key` header. Identifies the developer
+      and binds usage to a tier and monthly quota.
+    tags:
+      - Authentication
+      - Identity
+
+  - term: Tier
+    definition: >-
+      A pricing plan that determines monthly request volume. SnapAPI offers four
+      tiers: Free (50 req/mo, $0), Starter (500 req/mo, $5/mo — $2.50/mo launch
+      special), Basic (2,000 req/mo, $15/mo), and Pro (10,000 req/mo, $39/mo).
+    tags:
+      - Pricing
+      - Quota
+
+  - term: Screenshot
+    definition: >-
+      A PNG or JPEG image of a rendered web page returned by POST /api/screenshot.
+      Supports custom viewport dimensions (320-3840 wide, 240-2160 tall) and an
+      optional full-page mode that captures the entire scrollable canvas.
+    tags:
+      - Core
+      - Rendering
+
+  - term: Full Page
+    definition: >-
+      A screenshot rendering mode (`full_page: true`) that captures the entire
+      scrollable page rather than only the viewport. Useful for long-form
+      content captures.
+    tags:
+      - Rendering
+      - Screenshot
+
+  - term: Viewport
+    definition: >-
+      The simulated browser window dimensions used by headless Chromium when
+      rendering a page. Controlled by the `width` and `height` request parameters.
+    tags:
+      - Rendering
+
+  - term: Metadata
+    definition: >-
+      The structured page-level data extracted by POST /api/metadata: title,
+      description, favicon, Open Graph tags, Twitter Card tags, and the full
+      raw meta-tag list.
+    tags:
+      - Core
+      - Extraction
+      - SEO
+
+  - term: Open Graph
+    definition: >-
+      Meta tags conforming to the Open Graph protocol (ogp.me). SnapAPI surfaces
+      these as the `og` object in metadata responses, keyed without the `og:`
+      prefix.
+    tags:
+      - Metadata
+      - Social
+
+  - term: Twitter Card
+    definition: >-
+      Meta tags used by Twitter/X to render rich link previews. SnapAPI surfaces
+      these as the `twitter` object in metadata responses, keyed without the
+      `twitter:` prefix.
+    tags:
+      - Metadata
+      - Social
+
+  - term: Text Extraction
+    definition: >-
+      The visible text content of a web page returned by POST /api/text, with
+      HTML markup stripped and a word count attached. Suitable for content
+      analysis, NLP pipelines, and reading-time estimation.
+    tags:
+      - Core
+      - Extraction
+      - NLP
+
+  - term: PDF Generation
+    definition: >-
+      Conversion of a URL to a PDF document by POST /api/pdf. Supports A4,
+      Letter, Legal, and Tabloid page formats and an optional landscape flag.
+    tags:
+      - Core
+      - Rendering
+      - PDF
+
+  - term: Paper Format
+    definition: >-
+      The page format used when rendering a PDF. One of A4 (default), Letter,
+      Legal, or Tabloid.
+    tags:
+      - PDF
+      - Rendering
+
+  - term: Usage
+    definition: >-
+      The current calendar-month request count for an API key. Returned in the
+      `usage` object of JSON responses and via the `X-Usage-Used` and
+      `X-Usage-Limit` response headers on the screenshot endpoint. Also queryable
+      directly via GET /api/usage.
+    tags:
+      - Observability
+      - Quota
+
+  - term: Quota
+    definition: >-
+      The monthly request ceiling for a tier (50, 500, 2000, or 10000). Quotas
+      reset at the start of each calendar month. Exceeding the quota returns
+      HTTP 429.
+    tags:
+      - Pricing
+      - Quota
+
+  - term: Headless Chromium
+    definition: >-
+      The rendering engine that backs every SnapAPI endpoint. Each screenshot,
+      metadata, text, or PDF request spins up a headless Chrome page to fetch
+      and render the target URL.
+    tags:
+      - Rendering
+      - Infrastructure
+
+  - term: Signup
+    definition: >-
+      Self-service issuance of an API key via POST /api/signup. Requires only an
+      email address and an application name; no credit card. The returned key
+      is shown once and must be stored by the caller.
+    tags:
+      - Authentication
+      - Onboarding

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snapapi/main/json-schema/snapapi-usage-schema.json",
+  "title": "SnapAPI Usage",
+  "description": "Per-API-key monthly usage report returned by GET /api/usage.",
+  "type": "object",
+  "required": ["tier", "used", "limit", "remaining"],
+  "properties": {
+    "tier": {
+      "type": "string",
+      "enum": ["free", "starter", "basic", "pro"],
+      "description": "Billing tier of the API key."
+    },
+    "used": { "type": "integer", "minimum": 0 },
+    "limit": { "type": "integer", "minimum": 0 },
+    "remaining": { "type": "integer" }
+  }
+}

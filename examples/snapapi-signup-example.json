@@ -1,0 +1,22 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://snap.michaelcli.com/api/signup",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "email": "kin@apievangelist.com",
+      "name": "API Evangelist"
+    }
+  },
+  "response": {
+    "status": 201,
+    "body": {
+      "key": "snap_7f1e2c9a8b6d4e3f0a1b2c3d4e5f6071",
+      "name": "API Evangelist",
+      "tier": "free",
+      "message": "API key created. Save it now — you will not see it again. Free tier allows 50 requests per month."
+    }
+  }
+}

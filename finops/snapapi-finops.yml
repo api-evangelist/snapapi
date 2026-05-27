@@ -1,0 +1,180 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+provider: SnapAPI
+providerId: snapapi
+publisherName: SnapAPI
+serviceCategory: API
+created: '2026-05-27'
+modified: '2026-05-27'
+tags:
+  - Screenshots
+  - Metadata Extraction
+  - PDF Generation
+  - Text Extraction
+  - Headless Chromium
+  - FinOps
+  - Cost Management
+  - FOCUS
+description: >-
+  FinOps framework definition for SnapAPI. Provides a FOCUS 1.3-aligned mapping
+  for cost allocation, usage measurement, and unit-economics reporting across
+  the four metered endpoints (screenshot, metadata, text, PDF). SnapAPI bills
+  on a fixed-tier subscription model — there is no per-request line-item
+  pricing once a tier is selected — so unit economics derive from the
+  effective price-per-request implied by each tier's quota.
+principles:
+  - name: Visibility
+    description: >-
+      Make screenshot, metadata, text, and PDF consumption visible to
+      engineering teams and feature owners alongside the underlying SnapAPI
+      subscription cost.
+  - name: Allocation
+    description: >-
+      Tag every SnapAPI call with the consuming team, environment, application,
+      feature, and target-URL bucket so the fixed monthly cost can be
+      apportioned by usage share.
+  - name: Optimization
+    description: >-
+      Continuously evaluate caching, request batching, and tier selection. A
+      key under-quota signals you are paying for unused capacity; a key
+      consistently near quota signals you should consider the next tier or a
+      one-time bundle.
+  - name: Accountability
+    description: >-
+      Assign a budget owner per consuming team or product so the SnapAPI
+      monthly invoice has a clear consumer of record.
+domains:
+  - name: Understand Usage and Cost
+    capabilities:
+      - Data Ingestion
+      - Allocation
+      - Reporting and Analytics
+      - Anomaly Management
+  - name: Quantify Business Value
+    capabilities:
+      - Planning and Estimating
+      - Forecasting
+      - Budgeting
+      - Benchmarking
+      - Unit Economics
+  - name: Optimize Usage and Cost
+    capabilities:
+      - Architecting for Cloud
+      - Rate Optimization
+      - Workload Optimization
+      - Licensing and SaaS
+  - name: Manage the FinOps Practice
+    capabilities:
+      - FinOps Practice Operations
+      - FinOps Education and Enablement
+      - Invoicing and Chargeback
+      - Onboarding Workloads
+billingModel:
+  pricingCategory: Subscription
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+    - Usage
+    - Purchase
+    - Tax
+    - Credit
+    - Adjustment
+  chargeFrequency: Recurring
+  oneTimeOption:
+    enabled: true
+    description: One-time $5 / 500-request bundle available via Stripe checkout
+    purchaseUrl: https://buy.stripe.com/28E9AV7UZ93Y4jj7UNbwk04
+focusColumns:
+  ServiceName: SnapAPI
+  ServiceCategory: Developer Tools / API
+  ProviderName: SnapAPI
+  PublisherName: SnapAPI
+  InvoiceIssuerName: SnapAPI
+  PricingCategory: Subscription
+  PricingUnit: request
+  BillingCurrency: USD
+  ChargeCategory: Usage
+meters:
+  - name: api_requests
+    description: Count of billable API requests across all four endpoints
+    unit: request
+    aggregation: sum
+    dimensions:
+      - endpoint
+      - tier
+      - api_key
+      - consumer
+  - name: screenshot_renders
+    description: Subset of api_requests targeting POST /api/screenshot
+    unit: request
+    aggregation: sum
+    dimensions:
+      - tier
+      - api_key
+      - output_format
+      - full_page
+  - name: pdf_renders
+    description: Subset of api_requests targeting POST /api/pdf
+    unit: request
+    aggregation: sum
+    dimensions:
+      - tier
+      - api_key
+      - paper_format
+      - landscape
+  - name: metadata_extractions
+    description: Subset of api_requests targeting POST /api/metadata
+    unit: request
+    aggregation: sum
+    dimensions:
+      - tier
+      - api_key
+  - name: text_extractions
+    description: Subset of api_requests targeting POST /api/text
+    unit: request
+    aggregation: sum
+    dimensions:
+      - tier
+      - api_key
+apis:
+  - name: SnapAPI
+    baseURL: https://snap.michaelcli.com
+    tags:
+      - Screenshots
+      - Metadata
+      - PDF
+      - Text Extraction
+      - REST
+    serviceName: SnapAPI
+    serviceCategory: API
+unitEconomics:
+  - name: Effective Cost per Request (Free)
+    metric: 0.00 USD / 50 requests
+    target: '0.0000'
+  - name: Effective Cost per Request (Starter list)
+    metric: 5.00 USD / 500 requests
+    target: '0.0100'
+  - name: Effective Cost per Request (Starter LAUNCH50)
+    metric: 2.50 USD / 500 requests
+    target: '0.0050'
+  - name: Effective Cost per Request (Basic)
+    metric: 15.00 USD / 2000 requests
+    target: '0.0075'
+  - name: Effective Cost per Request (Pro)
+    metric: 39.00 USD / 10000 requests
+    target: '0.0039'
+  - name: Effective Cost per Request (One-Time 500)
+    metric: 5.00 USD / 500 requests
+    target: '0.0100'
+  - name: Quota Utilization
+    metric: api_requests / tier_monthly_limit
+    target: '0.80'
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

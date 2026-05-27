@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snapapi/main/json-schema/snapapi-pdf-request-schema.json",
+  "title": "SnapAPI PDF Request",
+  "description": "Request body for POST /api/pdf. Configures page format and orientation for the headless Chromium PDF render.",
+  "type": "object",
+  "required": ["url"],
+  "properties": {
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Fully qualified URL to render as PDF."
+    },
+    "format": {
+      "type": "string",
+      "enum": ["A4", "Letter", "Legal", "Tabloid"],
+      "default": "A4",
+      "description": "Paper format for the rendered PDF."
+    },
+    "landscape": {
+      "type": "boolean",
+      "default": false,
+      "description": "Render the page in landscape orientation."
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,26 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://snap.michaelcli.com/api/screenshot",
+    "headers": {
+      "X-API-Key": "snap_7f1e2c9a8b6d4e3f0a1b2c3d4e5f6071",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "url": "https://apievangelist.com",
+      "width": 1280,
+      "height": 720,
+      "full_page": false,
+      "format": "png"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "image/png",
+      "X-Usage-Used": 3,
+      "X-Usage-Limit": 50
+    },
+    "body": "<binary PNG image data>"
+  }
+}

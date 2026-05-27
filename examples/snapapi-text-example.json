@@ -1,0 +1,28 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://snap.michaelcli.com/api/text",
+    "headers": {
+      "X-API-Key": "snap_7f1e2c9a8b6d4e3f0a1b2c3d4e5f6071",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "url": "https://example.com"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": {
+        "url": "https://example.com",
+        "title": "Example Domain",
+        "text": "Example Domain This domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission. More information...",
+        "word_count": 28
+      },
+      "usage": {
+        "used": 5,
+        "limit": 50
+      }
+    }
+  }
+}

@@ -1,0 +1,124 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: SnapAPI
+providerId: snapapi
+created: '2026-05-27'
+modified: '2026-05-27'
+reconciled: true
+sources:
+  - https://snap.michaelcli.com
+  - https://snap.michaelcli.com/openapi.json
+tags:
+  - Screenshots
+  - Metadata Extraction
+  - PDF Generation
+  - Rate Limiting
+  - Quotas
+description: >-
+  Machine-readable rate-limit definitions for SnapAPI. Quotas are scoped to the
+  API key on a per-calendar-month basis and signaled on the screenshot endpoint
+  via the `X-Usage-Used` and `X-Usage-Limit` response headers. The
+  `/api/usage` endpoint returns current usage. Exceeding the monthly quota
+  returns HTTP 429 with a JSON body containing `error`, `limit`, `used`, and
+  `tier`. Per-minute or burst caps are not publicly documented; per-tier
+  policies below capture only the quota dimension as authoritative.
+headers:
+  used: X-Usage-Used
+  limit: X-Usage-Limit
+  retryAfter: Retry-After
+responseCodes:
+  quotaExceeded: 429
+  unauthorized: 401
+  badRequest: 400
+limits:
+  - tier: free
+    name: Free Tier Monthly Quota
+    scope: api-key
+    metric: requests_per_month
+    limit: 50
+    timeFrame: month
+    reconciled: true
+    applies:
+      - POST /api/screenshot
+      - POST /api/metadata
+      - POST /api/text
+      - POST /api/pdf
+  - tier: starter
+    name: Starter Tier Monthly Quota
+    scope: api-key
+    metric: requests_per_month
+    limit: 500
+    timeFrame: month
+    reconciled: true
+    applies:
+      - POST /api/screenshot
+      - POST /api/metadata
+      - POST /api/text
+      - POST /api/pdf
+  - tier: basic
+    name: Basic Tier Monthly Quota
+    scope: api-key
+    metric: requests_per_month
+    limit: 2000
+    timeFrame: month
+    reconciled: true
+    applies:
+      - POST /api/screenshot
+      - POST /api/metadata
+      - POST /api/text
+      - POST /api/pdf
+  - tier: pro
+    name: Pro Tier Monthly Quota
+    scope: api-key
+    metric: requests_per_month
+    limit: 10000
+    timeFrame: month
+    reconciled: true
+    applies:
+      - POST /api/screenshot
+      - POST /api/metadata
+      - POST /api/text
+      - POST /api/pdf
+  - tier: any
+    name: Per-Minute / Burst Cap
+    scope: api-key
+    metric: requests_per_minute
+    limit: null
+    timeFrame: minute
+    reconciled: false
+    note: >-
+      No per-minute or burst cap is publicly documented. Practical concurrency
+      is bounded by per-key headless-Chromium worker availability. Value
+      omitted pending provider confirmation.
+    applies:
+      - POST /api/screenshot
+      - POST /api/metadata
+      - POST /api/text
+      - POST /api/pdf
+policies:
+  - name: Quota Signaling
+    description: >-
+      Screenshot responses include `X-Usage-Used` and `X-Usage-Limit` headers.
+      JSON responses for metadata and text include a top-level `usage` object
+      with `used` and `limit`.
+  - name: Quota Reset
+    description: >-
+      Monthly request counters reset at the start of each calendar month in
+      UTC.
+  - name: 429 Response Body
+    description: >-
+      When the monthly quota is exceeded, requests return HTTP 429 with a JSON
+      body containing `error`, `limit`, `used`, and `tier`.
+  - name: Backoff Strategy
+    description: >-
+      Clients should honor the `Retry-After` header when present and otherwise
+      back off until the start of the next calendar month for quota-exhaustion
+      errors.
+  - name: Free Tier Eligibility
+    description: >-
+      A single email may register one free API key. Multiple registrations
+      from the same address are not guaranteed to be honored.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

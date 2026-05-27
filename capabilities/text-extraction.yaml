@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SnapAPI Text Extraction
+  description: Extract the visible text content and word count from any web page. Self-contained Naftiko capability covering the SnapAPI text extraction business surface.
+  tags:
+    - SnapAPI
+    - Text Extraction
+    - Content
+    - NLP
+  created: '2026-05-27'
+  modified: '2026-05-27'
+binds:
+  - namespace: env
+    keys:
+      SNAPAPI_API_KEY: SNAPAPI_API_KEY
+capability:
+  consumes:
+    - type: http
+      namespace: snapapi-text
+      baseUri: https://snap.michaelcli.com
+      description: SnapAPI text extraction business capability. Self-contained, no shared references.
+      resources:
+        - name: text
+          path: /api/text
+          operations:
+            - name: extractText
+              method: POST
+              description: Extract visible text content from a URL
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  description: Text extraction request body with target URL (JSON).
+                  required: true
+      authentication:
+        type: bearer
+        token: '{{env.SNAPAPI_API_KEY}}'
+        header: X-API-Key
+  exposes:
+    - type: rest
+      namespace: snapapi-text-rest
+      port: 8080
+      description: REST adapter for SnapAPI Text Extraction. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+      resources:
+        - path: /v1/api/text
+          name: text
+          description: REST surface for the text extraction endpoint.
+          operations:
+            - method: POST
+              name: extractText
+              description: Extract visible text content from a URL
+              call: snapapi-text.extractText
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+    - type: mcp
+      namespace: snapapi-text-mcp
+      port: 9090
+      transport: http
+      description: MCP adapter for SnapAPI Text Extraction. One tool per consumed operation, routed inline through this capability's consumes block.
+      tools:
+        - name: extract-text
+          description: Extract clean, readable text content and word count from any URL
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: snapapi-text.extractText
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.

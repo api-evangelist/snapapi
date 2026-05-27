@@ -1,0 +1,44 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://snap.michaelcli.com/api/metadata",
+    "headers": {
+      "X-API-Key": "snap_7f1e2c9a8b6d4e3f0a1b2c3d4e5f6071",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "url": "https://github.com"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": {
+        "url": "https://github.com",
+        "title": "GitHub: Let's build from here",
+        "description": "GitHub is where over 100 million developers shape the future of software, together. Contribute to the open source community, manage your Git repositories, review code like a pro, track bugs and features, power your CI/CD and DevOps workflows, and secure code before you commit it.",
+        "favicon": "https://github.com/favicon.ico",
+        "og": {
+          "site_name": "GitHub",
+          "type": "object",
+          "title": "GitHub: Let's build from here",
+          "url": "https://github.com/",
+          "image": "https://github.githubassets.com/assets/github-mark-9be88460eaa6.png"
+        },
+        "twitter": {
+          "card": "summary_large_image",
+          "site": "@github",
+          "title": "GitHub: Let's build from here"
+        },
+        "meta_tags": [
+          { "name": "viewport", "content": "width=device-width" },
+          { "name": "theme-color", "content": "#1e2327" }
+        ]
+      },
+      "usage": {
+        "used": 4,
+        "limit": 50
+      }
+    }
+  }
+}

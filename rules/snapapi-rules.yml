@@ -1,0 +1,123 @@
+extends: [[spectral:oas, recommended]]
+
+rules:
+  snapapi-operation-id-required:
+    description: All operations must have an operationId.
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete,head,options]"
+    then:
+      field: operationId
+      function: truthy
+
+  snapapi-summary-title-case:
+    description: Operation summaries must use Title Case.
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9 /()-]+$"
+
+  snapapi-summary-required:
+    description: Every operation must have a summary.
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: summary
+      function: truthy
+
+  snapapi-description-required:
+    description: Every operation must have a description.
+    severity: info
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: description
+      function: truthy
+
+  snapapi-apikey-auth-required:
+    description: The API must define an ApiKeyAuth security scheme on the X-API-Key header.
+    severity: error
+    given: "$.components.securitySchemes.ApiKeyAuth"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: [type, in, name]
+          properties:
+            type: { const: apiKey }
+            in: { const: header }
+            name: { const: X-API-Key }
+
+  snapapi-servers-required:
+    description: The API must define at least one server.
+    severity: error
+    given: "$"
+    then:
+      field: servers
+      function: truthy
+
+  snapapi-response-200-or-201:
+    description: Every operation must define a 200 or 201 success response.
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ["200"]
+            - required: ["201"]
+
+  snapapi-401-response-required:
+    description: Authenticated operations must define a 401 Unauthorized response.
+    severity: warn
+    given: "$.paths[*][post,put,patch,delete,get].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ["401"]
+            - required: ["201"]
+
+  snapapi-429-on-metered-endpoints:
+    description: Metered POST endpoints must declare a 429 Rate Limited response.
+    severity: warn
+    given: "$.paths[/api/screenshot,/api/metadata,/api/text,/api/pdf].post.responses"
+    then:
+      field: "429"
+      function: truthy
+
+  snapapi-usage-headers-on-screenshot:
+    description: The screenshot 200 response should signal X-Usage-Used and X-Usage-Limit headers.
+    severity: info
+    given: "$.paths[/api/screenshot].post.responses.200.headers"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          required: [X-Usage-Used, X-Usage-Limit]
+
+  snapapi-url-required-in-body:
+    description: Screenshot, metadata, text, and PDF operations must require a `url` field in the request body schema.
+    severity: error
+    given: "$.paths[/api/screenshot,/api/metadata,/api/text,/api/pdf].post.requestBody.content.application/json.schema"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          required: [required]
+          properties:
+            required:
+              type: array
+              contains:
+                const: url
+
+  snapapi-info-contact-required:
+    description: The info object must include a contact entry.
+    severity: warn
+    given: "$.info"
+    then:
+      field: contact
+      function: truthy

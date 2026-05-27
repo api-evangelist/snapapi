@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snapapi/main/json-schema/snapapi-screenshot-request-schema.json",
+  "title": "SnapAPI Screenshot Request",
+  "description": "Request body for POST /api/screenshot. Captures rendering options for headless Chromium.",
+  "type": "object",
+  "required": ["url"],
+  "properties": {
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Fully qualified URL to capture."
+    },
+    "width": {
+      "type": "integer",
+      "minimum": 320,
+      "maximum": 3840,
+      "default": 1280,
+      "description": "Viewport width in pixels."
+    },
+    "height": {
+      "type": "integer",
+      "minimum": 240,
+      "maximum": 2160,
+      "default": 720,
+      "description": "Viewport height in pixels."
+    },
+    "full_page": {
+      "type": "boolean",
+      "default": false,
+      "description": "Capture the entire scrollable page rather than just the viewport."
+    },
+    "format": {
+      "type": "string",
+      "enum": ["png", "jpeg"],
+      "default": "png",
+      "description": "Output image format."
+    }
+  },
+  "additionalProperties": false
+}

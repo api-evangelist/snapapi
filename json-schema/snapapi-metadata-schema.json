@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/snapapi/main/json-schema/snapapi-metadata-schema.json",
+  "title": "SnapAPI Metadata",
+  "description": "Structured website metadata extracted by POST /api/metadata. Includes title, description, Open Graph and Twitter Card values, favicon, and the full set of meta tags discovered on the page.",
+  "type": "object",
+  "required": ["data"],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": ["url"],
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "favicon": { "type": "string", "format": "uri" },
+        "og": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "description": "Open Graph property/value pairs keyed without the og: prefix."
+        },
+        "twitter": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "description": "Twitter Card name/value pairs keyed without the twitter: prefix."
+        },
+        "meta_tags": {
+          "type": "array",
+          "description": "Raw meta tags discovered on the page.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "content": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "usage": {
+      "type": "object",
+      "properties": {
+        "used": { "type": "integer", "minimum": 0 },
+        "limit": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}
