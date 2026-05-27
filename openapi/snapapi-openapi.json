@@ -1,0 +1,311 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "SnapAPI",
+    "description": "Website screenshot, metadata extraction, PDF generation, and text extraction API. Powered by headless Chromium.",
+    "version": "1.0.0",
+    "contact": { "url": "https://snap.michaelcli.com" }
+  },
+  "servers": [
+    { "url": "https://snap.michaelcli.com", "description": "Production" }
+  ],
+  "security": [{ "ApiKeyAuth": [] }],
+  "paths": {
+    "/api/signup": {
+      "post": {
+        "summary": "Create free API key",
+        "description": "Sign up for a free API key (50 requests/month). No credit card required.",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "name"],
+                "properties": {
+                  "email": { "type": "string", "format": "email", "example": "dev@example.com" },
+                  "name": { "type": "string", "example": "My App" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "API key created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "key": { "type": "string", "example": "snap_abc123..." },
+                    "name": { "type": "string" },
+                    "tier": { "type": "string", "example": "free" },
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/screenshot": {
+      "post": {
+        "summary": "Take website screenshot",
+        "description": "Capture a screenshot of any URL. Returns PNG or JPEG image data.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["url"],
+                "properties": {
+                  "url": { "type": "string", "format": "uri", "example": "https://github.com" },
+                  "width": { "type": "integer", "minimum": 320, "maximum": 3840, "default": 1280 },
+                  "height": { "type": "integer", "minimum": 240, "maximum": 2160, "default": 720 },
+                  "full_page": { "type": "boolean", "default": false },
+                  "format": { "type": "string", "enum": ["png", "jpeg"], "default": "png" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Screenshot image",
+            "headers": {
+              "X-Usage-Used": { "schema": { "type": "integer" }, "description": "Requests used this month" },
+              "X-Usage-Limit": { "schema": { "type": "integer" }, "description": "Monthly request limit" }
+            },
+            "content": {
+              "image/png": { "schema": { "type": "string", "format": "binary" } },
+              "image/jpeg": { "schema": { "type": "string", "format": "binary" } }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/api/metadata": {
+      "post": {
+        "summary": "Extract website metadata",
+        "description": "Extract title, description, Open Graph tags, Twitter Cards, favicons, and all meta tags from any URL.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["url"],
+                "properties": {
+                  "url": { "type": "string", "format": "uri", "example": "https://github.com" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Metadata extracted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "url": { "type": "string" },
+                        "title": { "type": "string" },
+                        "description": { "type": "string" },
+                        "favicon": { "type": "string" },
+                        "og": { "type": "object", "additionalProperties": { "type": "string" } },
+                        "twitter": { "type": "object", "additionalProperties": { "type": "string" } },
+                        "meta_tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": { "type": "string" },
+                              "content": { "type": "string" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "usage": {
+                      "type": "object",
+                      "properties": {
+                        "used": { "type": "integer" },
+                        "limit": { "type": "integer" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/api/pdf": {
+      "post": {
+        "summary": "Generate PDF from URL",
+        "description": "Convert any web page to a PDF document. Supports A4, Letter, and other page formats.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["url"],
+                "properties": {
+                  "url": { "type": "string", "format": "uri", "example": "https://example.com" },
+                  "format": { "type": "string", "enum": ["A4", "Letter", "Legal", "Tabloid"], "default": "A4" },
+                  "landscape": { "type": "boolean", "default": false }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "PDF document",
+            "content": { "application/pdf": { "schema": { "type": "string", "format": "binary" } } }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/api/text": {
+      "post": {
+        "summary": "Extract text from URL",
+        "description": "Extract the visible text content from any web page, with word count.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["url"],
+                "properties": {
+                  "url": { "type": "string", "format": "uri", "example": "https://example.com" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Text extracted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "url": { "type": "string" },
+                        "title": { "type": "string" },
+                        "text": { "type": "string" },
+                        "word_count": { "type": "integer" }
+                      }
+                    },
+                    "usage": {
+                      "type": "object",
+                      "properties": {
+                        "used": { "type": "integer" },
+                        "limit": { "type": "integer" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/api/usage": {
+      "get": {
+        "summary": "Check API usage",
+        "description": "Get your current month's API usage and limits.",
+        "responses": {
+          "200": {
+            "description": "Usage info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tier": { "type": "string" },
+                    "used": { "type": "integer" },
+                    "limit": { "type": "integer" },
+                    "remaining": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Invalid request",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "Unauthorized": {
+        "description": "Missing or invalid API key",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "RateLimited": {
+        "description": "Monthly request limit exceeded",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "string" },
+                "limit": { "type": "integer" },
+                "used": { "type": "integer" },
+                "tier": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string" }
+        }
+      }
+    }
+  }
+}

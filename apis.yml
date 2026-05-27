@@ -1,0 +1,50 @@
+aid: snapapi
+name: SnapAPI
+description: REST API for website screenshots, metadata extraction, text extraction, and PDF generation. Powered by headless Chromium. Free tier with 50 requests/month, no credit card required. API key issued via self-service signup.
+url: https://snap.michaelcli.com/apis.json
+image: https://snap.michaelcli.com/favicon.ico
+specificationVersion: '0.20'
+created: '2026-05-27'
+modified: '2026-05-27'
+tags:
+  - Screenshots
+  - Website Screenshots
+  - Metadata Extraction
+  - Text Extraction
+  - PDF Generation
+  - Headless Chromium
+  - Web Scraping
+  - Developer Tools
+  - REST
+apis:
+  - name: SnapAPI
+    description: Website screenshot, metadata extraction, PDF generation, and text extraction API powered by headless Chromium. X-API-Key authentication, free tier 50 requests/month.
+    humanURL: https://snap.michaelcli.com
+    baseURL: https://snap.michaelcli.com
+    tags:
+      - Screenshots
+      - Metadata
+      - PDF
+      - Text Extraction
+    properties:
+      - type: OpenAPI
+        url: https://snap.michaelcli.com/openapi.json
+      - type: Documentation
+        url: https://snap.michaelcli.com
+      - type: Signup
+        url: https://snap.michaelcli.com/api/signup
+    contact:
+      - FN: SnapAPI
+        url: https://snap.michaelcli.com
+common:
+  - type: Website
+    url: https://snap.michaelcli.com
+  - type: Documentation
+    url: https://snap.michaelcli.com
+  - type: OpenAPI
+    url: https://snap.michaelcli.com/openapi.json
+  - type: Signup
+    url: https://snap.michaelcli.com/api/signup
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
