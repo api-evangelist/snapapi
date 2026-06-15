@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SnapAPI",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-Key",
+      "value": "{{X-API-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Create free API key",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://snap.michaelcli.com/api/signup",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Sign up for a free API key (50 requests/month). No credit card required."
+    },
+    {
+      "info": {
+        "name": "Take website screenshot",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://snap.michaelcli.com/api/screenshot",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Capture a screenshot of any URL. Returns PNG or JPEG image data."
+    },
+    {
+      "info": {
+        "name": "Extract website metadata",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://snap.michaelcli.com/api/metadata",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Extract title, description, Open Graph tags, Twitter Cards, favicons, and all meta tags from any URL."
+    },
+    {
+      "info": {
+        "name": "Generate PDF from URL",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://snap.michaelcli.com/api/pdf",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Convert any web page to a PDF document. Supports A4, Letter, and other page formats."
+    },
+    {
+      "info": {
+        "name": "Extract text from URL",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://snap.michaelcli.com/api/text",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Extract the visible text content from any web page, with word count."
+    },
+    {
+      "info": {
+        "name": "Check API usage",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://snap.michaelcli.com/api/usage"
+      },
+      "docs": "Get your current month's API usage and limits."
+    }
+  ],
+  "bundled": true
+}
