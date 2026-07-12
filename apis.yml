@@ -37,6 +37,10 @@ apis:
       - FN: SnapAPI
         url: https://snap.michaelcli.com
 common:
+  - type: DomainSecurity
+    url: security/snapapi-domain-security.yml
+  - type: Authentication
+    url: authentication/snapapi-authentication.yml
   - type: Website
     url: https://snap.michaelcli.com
   - type: Documentation
@@ -45,6 +49,8 @@ common:
     url: https://snap.michaelcli.com/openapi.json
   - type: Signup
     url: https://snap.michaelcli.com/api/signup
+  - type: Blog
+    url: https://snap.michaelcli.com/blog/building-screenshot-api.html
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
