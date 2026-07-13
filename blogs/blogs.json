@@ -1,0 +1,18 @@
+{
+  "repo": "snapapi",
+  "feeds": [
+    {
+      "source": "https://snap.michaelcli.com/blog/building-screenshot-api.html",
+      "feed_url": "https://snap.michaelcli.com/blog/building-screenshot-api.html",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://snap.michaelcli.com/api/signup",
+      "error": "HTTPError"
+    }
+  ],
+  "fetched": "2026-07-11T11:50:51Z",
+  "post_count": 1
+}
