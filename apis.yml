@@ -37,6 +37,8 @@ apis:
       - FN: SnapAPI
         url: https://snap.michaelcli.com
 common:
+  - type: AgenticAccess
+    url: agentic-access/snapapi-agentic-access.yml
   - type: DomainSecurity
     url: security/snapapi-domain-security.yml
   - type: Authentication
