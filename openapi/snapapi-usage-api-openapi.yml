@@ -1,0 +1,43 @@
+openapi: 3.0.3
+info:
+  title: Snap Metadata Usage API
+  description: Website screenshot, metadata extraction, PDF generation, and text extraction API. Powered by headless Chromium.
+  version: 1.0.0
+  contact:
+    url: https://snap.michaelcli.com
+servers:
+- url: https://snap.michaelcli.com
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Usage
+paths:
+  /api/usage:
+    get:
+      summary: Check API usage
+      description: Get your current month's API usage and limits.
+      responses:
+        '200':
+          description: Usage info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tier:
+                    type: string
+                  used:
+                    type: integer
+                  limit:
+                    type: integer
+                  remaining:
+                    type: integer
+      tags:
+      - Usage
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key

@@ -1,0 +1,123 @@
+openapi: 3.0.3
+info:
+  title: Snap Metadata API
+  description: Website screenshot, metadata extraction, PDF generation, and text extraction API. Powered by headless Chromium.
+  version: 1.0.0
+  contact:
+    url: https://snap.michaelcli.com
+servers:
+- url: https://snap.michaelcli.com
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Metadata
+paths:
+  /api/metadata:
+    post:
+      summary: Extract website metadata
+      description: Extract title, description, Open Graph tags, Twitter Cards, favicons, and all meta tags from any URL.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - url
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  example: https://github.com
+      responses:
+        '200':
+          description: Metadata extracted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                      title:
+                        type: string
+                      description:
+                        type: string
+                      favicon:
+                        type: string
+                      og:
+                        type: object
+                        additionalProperties:
+                          type: string
+                      twitter:
+                        type: object
+                        additionalProperties:
+                          type: string
+                      meta_tags:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            content:
+                              type: string
+                  usage:
+                    type: object
+                    properties:
+                      used:
+                        type: integer
+                      limit:
+                        type: integer
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      tags:
+      - Metadata
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Monthly request limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              limit:
+                type: integer
+              used:
+                type: integer
+              tier:
+                type: string
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key

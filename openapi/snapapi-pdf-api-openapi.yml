@@ -1,0 +1,99 @@
+openapi: 3.0.3
+info:
+  title: Snap Metadata Pdf API
+  description: Website screenshot, metadata extraction, PDF generation, and text extraction API. Powered by headless Chromium.
+  version: 1.0.0
+  contact:
+    url: https://snap.michaelcli.com
+servers:
+- url: https://snap.michaelcli.com
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Pdf
+paths:
+  /api/pdf:
+    post:
+      summary: Generate PDF from URL
+      description: Convert any web page to a PDF document. Supports A4, Letter, and other page formats.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - url
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  example: https://example.com
+                format:
+                  type: string
+                  enum:
+                  - A4
+                  - Letter
+                  - Legal
+                  - Tabloid
+                  default: A4
+                landscape:
+                  type: boolean
+                  default: false
+      responses:
+        '200':
+          description: PDF document
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      tags:
+      - Pdf
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Monthly request limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              limit:
+                type: integer
+              used:
+                type: integer
+              tier:
+                type: string
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key

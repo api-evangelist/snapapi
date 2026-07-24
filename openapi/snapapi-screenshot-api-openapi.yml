@@ -1,0 +1,120 @@
+openapi: 3.0.3
+info:
+  title: Snap Metadata Screenshot API
+  description: Website screenshot, metadata extraction, PDF generation, and text extraction API. Powered by headless Chromium.
+  version: 1.0.0
+  contact:
+    url: https://snap.michaelcli.com
+servers:
+- url: https://snap.michaelcli.com
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Screenshot
+paths:
+  /api/screenshot:
+    post:
+      summary: Take website screenshot
+      description: Capture a screenshot of any URL. Returns PNG or JPEG image data.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - url
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  example: https://github.com
+                width:
+                  type: integer
+                  minimum: 320
+                  maximum: 3840
+                  default: 1280
+                height:
+                  type: integer
+                  minimum: 240
+                  maximum: 2160
+                  default: 720
+                full_page:
+                  type: boolean
+                  default: false
+                format:
+                  type: string
+                  enum:
+                  - png
+                  - jpeg
+                  default: png
+      responses:
+        '200':
+          description: Screenshot image
+          headers:
+            X-Usage-Used:
+              schema:
+                type: integer
+              description: Requests used this month
+            X-Usage-Limit:
+              schema:
+                type: integer
+              description: Monthly request limit
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      tags:
+      - Screenshot
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Monthly request limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              limit:
+                type: integer
+              used:
+                type: integer
+              tier:
+                type: string
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key

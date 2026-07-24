@@ -1,0 +1,63 @@
+openapi: 3.0.3
+info:
+  title: Snap Metadata Signup API
+  description: Website screenshot, metadata extraction, PDF generation, and text extraction API. Powered by headless Chromium.
+  version: 1.0.0
+  contact:
+    url: https://snap.michaelcli.com
+servers:
+- url: https://snap.michaelcli.com
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Signup
+paths:
+  /api/signup:
+    post:
+      summary: Create free API key
+      description: Sign up for a free API key (50 requests/month). No credit card required.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - email
+              - name
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: dev@example.com
+                name:
+                  type: string
+                  example: My App
+      responses:
+        '201':
+          description: API key created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    example: snap_abc123...
+                  name:
+                    type: string
+                  tier:
+                    type: string
+                    example: free
+                  message:
+                    type: string
+      tags:
+      - Signup
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
