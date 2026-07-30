@@ -2,6 +2,19 @@ aid: snapapi
 name: SnapAPI
 description: REST API for website screenshots, metadata extraction, text extraction, and PDF generation. Powered by headless Chromium. Free tier with 50 requests/month, no credit card required. API key issued via self-service signup.
 url: https://snap.michaelcli.com/apis.json
+accessModel:
+  pricing: freemium
+  onboarding: open
+  trial: false
+  try_now: true
+  public: true
+  label: Freemium · Open access
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 image: https://snap.michaelcli.com/favicon.ico
 specificationVersion: '0.20'
 created: '2026-05-27'
@@ -17,25 +30,90 @@ tags:
   - Developer Tools
   - REST
 apis:
-  - name: SnapAPI
-    description: Website screenshot, metadata extraction, PDF generation, and text extraction API powered by headless Chromium. X-API-Key authentication, free tier 50 requests/month.
-    humanURL: https://snap.michaelcli.com
-    baseURL: https://snap.michaelcli.com
-    tags:
-      - Screenshots
-      - Metadata
-      - PDF
-      - Text Extraction
-    properties:
-      - type: OpenAPI
-        url: https://snap.michaelcli.com/openapi.json
-      - type: Documentation
-        url: https://snap.michaelcli.com
-      - type: Signup
-        url: https://snap.michaelcli.com/api/signup
-    contact:
-      - FN: SnapAPI
-        url: https://snap.michaelcli.com
+- aid: snapapi:snapapi-metadata-api
+  name: SnapAPI Metadata API
+  description: The Metadata API from SnapAPI — 1 operation(s) for metadata.
+  humanURL: https://snap.michaelcli.com
+  baseURL: https://snap.michaelcli.com
+  tags:
+  - Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/snapapi-metadata-api-openapi.yml
+  - type: Documentation
+    url: https://snap.michaelcli.com
+  - type: Signup
+    url: https://snap.michaelcli.com/api/signup
+- aid: snapapi:snapapi-pdf-api
+  name: SnapAPI Pdf API
+  description: The Pdf API from SnapAPI — 1 operation(s) for pdf.
+  humanURL: https://snap.michaelcli.com
+  baseURL: https://snap.michaelcli.com
+  tags:
+  - Pdf
+  properties:
+  - type: OpenAPI
+    url: openapi/snapapi-pdf-api-openapi.yml
+  - type: Documentation
+    url: https://snap.michaelcli.com
+  - type: Signup
+    url: https://snap.michaelcli.com/api/signup
+- aid: snapapi:snapapi-screenshot-api
+  name: SnapAPI Screenshot API
+  description: The Screenshot API from SnapAPI — 1 operation(s) for screenshot.
+  humanURL: https://snap.michaelcli.com
+  baseURL: https://snap.michaelcli.com
+  tags:
+  - Screenshot
+  properties:
+  - type: OpenAPI
+    url: openapi/snapapi-screenshot-api-openapi.yml
+  - type: Documentation
+    url: https://snap.michaelcli.com
+  - type: Signup
+    url: https://snap.michaelcli.com/api/signup
+- aid: snapapi:snapapi-signup-api
+  name: SnapAPI Signup API
+  description: The Signup API from SnapAPI — 1 operation(s) for signup.
+  humanURL: https://snap.michaelcli.com
+  baseURL: https://snap.michaelcli.com
+  tags:
+  - Signup
+  properties:
+  - type: OpenAPI
+    url: openapi/snapapi-signup-api-openapi.yml
+  - type: Documentation
+    url: https://snap.michaelcli.com
+  - type: Signup
+    url: https://snap.michaelcli.com/api/signup
+- aid: snapapi:snapapi-text-api
+  name: SnapAPI Text API
+  description: The Text API from SnapAPI — 1 operation(s) for text.
+  humanURL: https://snap.michaelcli.com
+  baseURL: https://snap.michaelcli.com
+  tags:
+  - Text
+  properties:
+  - type: OpenAPI
+    url: openapi/snapapi-text-api-openapi.yml
+  - type: Documentation
+    url: https://snap.michaelcli.com
+  - type: Signup
+    url: https://snap.michaelcli.com/api/signup
+- aid: snapapi:snapapi-usage-api
+  name: SnapAPI Usage API
+  description: The Usage API from SnapAPI — 1 operation(s) for usage.
+  humanURL: https://snap.michaelcli.com
+  baseURL: https://snap.michaelcli.com
+  tags:
+  - Usage
+  properties:
+  - type: OpenAPI
+    url: openapi/snapapi-usage-api-openapi.yml
+  - type: Documentation
+    url: https://snap.michaelcli.com
+  - type: Signup
+    url: https://snap.michaelcli.com/api/signup
 common:
   - type: AgenticAccess
     url: agentic-access/snapapi-agentic-access.yml
