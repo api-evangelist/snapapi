@@ -1,0 +1,24 @@
+{
+  "provider": "snapapi",
+  "sources": [
+    "snapapi-metadata-api-openapi.yml",
+    "snapapi-pdf-api-openapi.yml",
+    "snapapi-screenshot-api-openapi.yml",
+    "snapapi-signup-api-openapi.yml",
+    "snapapi-text-api-openapi.yml",
+    "snapapi-usage-api-openapi.yml"
+  ],
+  "outputs": [
+    "snapapi-metadata-api-openapi.yml",
+    "snapapi-pdf-api-openapi.yml",
+    "snapapi-screenshot-api-openapi.yml",
+    "snapapi-signup-api-openapi.yml",
+    "snapapi-text-api-openapi.yml",
+    "snapapi-usage-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
