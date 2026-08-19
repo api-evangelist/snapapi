@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snap Metadata Screenshot API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-Key",
+      "value": "{{X-API-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Screenshot",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Take website screenshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://snap.michaelcli.com/api/screenshot",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Capture a screenshot of any URL. Returns PNG or JPEG image data."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

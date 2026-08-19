@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snap Metadata Signup API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-Key",
+      "value": "{{X-API-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Signup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create free API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://snap.michaelcli.com/api/signup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sign up for a free API key (50 requests/month). No credit card required."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

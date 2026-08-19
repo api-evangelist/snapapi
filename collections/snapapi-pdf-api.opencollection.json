@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Snap Metadata Pdf API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-Key",
+      "value": "{{X-API-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pdf",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate PDF from URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://snap.michaelcli.com/api/pdf",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Convert any web page to a PDF document. Supports A4, Letter, and other page formats."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
