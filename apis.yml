@@ -50,6 +50,8 @@ apis:
   humanURL: https://snap.michaelcli.com
   baseURL: https://snap.michaelcli.com
   tags:
+  - PDF
+  tags_raw:
   - Pdf
   properties:
   - type: OpenAPI
@@ -78,6 +80,8 @@ apis:
   humanURL: https://snap.michaelcli.com
   baseURL: https://snap.michaelcli.com
   tags:
+  - Sign Up
+  tags_raw:
   - Signup
   properties:
   - type: OpenAPI
