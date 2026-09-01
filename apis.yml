@@ -62,7 +62,7 @@ apis:
   humanURL: https://snap.michaelcli.com
   baseURL: https://snap.michaelcli.com
   tags:
-  - Pdf
+  - PDF
   tags_raw:
   - Pdf
   properties:
