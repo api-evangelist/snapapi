@@ -2,20 +2,15 @@
   "repo": "snapapi",
   "feeds": [
     {
-      "source": "https://snap.michaelcli.com/blog/building-screenshot-api.html",
-      "feed_url": "https://snap.michaelcli.com/blog/building-screenshot-api.html",
-      "title": "",
-      "saved": 0,
-      "method": "none",
-      "nature": "vendor-blog",
-      "nature_basis": "path_blog"
+      "source": "https://snap.michaelcli.com/api/signup",
+      "error": "HTTPError"
     },
     {
-      "source": "https://snap.michaelcli.com/api/signup",
+      "source": "https://snap.michaelcli.com/blog/building-screenshot-api.html",
       "error": "HTTPError"
     }
   ],
-  "fetched": "2026-08-30T22:33:40Z",
+  "fetched": "2026-09-06T19:17:18Z",
   "post_count": 1,
   "feed_nature": "vendor-blog",
   "feed_nature_basis": "path_blog",
