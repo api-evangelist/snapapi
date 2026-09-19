@@ -78,6 +78,8 @@ apis:
   humanURL: https://snap.michaelcli.com
   baseURL: https://snap.michaelcli.com
   tags:
+  - Screenshots
+  tags_raw:
   - Screenshot
   properties:
   - type: OpenAPI
