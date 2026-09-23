@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Snap Metadata Screenshot API
+  title: Snap Screenshot API
   description: Website screenshot, metadata extraction, PDF generation, and text extraction API. Powered by headless Chromium.
   version: 1.0.0
   contact:
@@ -78,14 +78,10 @@ paths:
           $ref: '#/components/responses/RateLimited'
       tags:
       - Screenshot
+      operationId: postApiScreenshot
+      x-operation-id-source: derived
 components:
   responses:
-    Unauthorized:
-      description: Missing or invalid API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     RateLimited:
       description: Monthly request limit exceeded
       content:
@@ -103,6 +99,12 @@ components:
                 type: string
     BadRequest:
       description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key
       content:
         application/json:
           schema:

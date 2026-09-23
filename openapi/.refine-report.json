@@ -1,12 +1,7 @@
 {
   "provider": "snapapi",
   "sources": [
-    "snapapi-metadata-api-openapi.yml",
-    "snapapi-pdf-api-openapi.yml",
-    "snapapi-screenshot-api-openapi.yml",
-    "snapapi-signup-api-openapi.yml",
-    "snapapi-text-api-openapi.yml",
-    "snapapi-usage-api-openapi.yml"
+    "_original/snapapi-openapi.json"
   ],
   "outputs": [
     "snapapi-metadata-api-openapi.yml",
@@ -19,6 +14,29 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "snapapi-openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "snapapi-openapi.json: tagged paths POST /api/signup -> Signup",
+    "snapapi-openapi.json: tagged paths POST /api/screenshot -> Screenshot",
+    "snapapi-openapi.json: tagged paths POST /api/metadata -> Metadata",
+    "snapapi-openapi.json: tagged paths POST /api/pdf -> Pdf",
+    "snapapi-openapi.json: tagged paths POST /api/text -> Text",
+    "snapapi-openapi.json: tagged paths GET /api/usage -> Usage",
+    "snapapi-openapi.json: declared missing tag: Metadata",
+    "snapapi-openapi.json: declared missing tag: Pdf",
+    "snapapi-openapi.json: declared missing tag: Screenshot",
+    "snapapi-openapi.json: declared missing tag: Signup",
+    "snapapi-openapi.json: declared missing tag: Text",
+    "snapapi-openapi.json: declared missing tag: Usage",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "snapapi-metadata-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "snapapi-pdf-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "snapapi-screenshot-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "snapapi-signup-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "snapapi-text-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "snapapi-usage-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

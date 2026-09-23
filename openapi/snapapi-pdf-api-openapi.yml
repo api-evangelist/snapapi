@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Snap Metadata Pdf API
+  title: Snap PDF API
   description: Website screenshot, metadata extraction, PDF generation, and text extraction API. Powered by headless Chromium.
   version: 1.0.0
   contact:
@@ -11,7 +11,7 @@ servers:
 security:
 - ApiKeyAuth: []
 tags:
-- name: Pdf
+- name: PDF
 paths:
   /api/pdf:
     post:
@@ -56,15 +56,11 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimited'
       tags:
-      - Pdf
+      - PDF
+      operationId: postApiPdf
+      x-operation-id-source: derived
 components:
   responses:
-    Unauthorized:
-      description: Missing or invalid API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     RateLimited:
       description: Monthly request limit exceeded
       content:
@@ -82,6 +78,12 @@ components:
                 type: string
     BadRequest:
       description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key
       content:
         application/json:
           schema:
