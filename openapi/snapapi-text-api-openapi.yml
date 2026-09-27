@@ -67,7 +67,19 @@ paths:
       operationId: postApiText
       x-operation-id-source: derived
 components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
   responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     RateLimited:
       description: Monthly request limit exceeded
       content:
@@ -83,24 +95,12 @@ components:
                 type: integer
               tier:
                 type: string
-    BadRequest:
-      description: Invalid request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Missing or invalid API key
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
