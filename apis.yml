@@ -127,6 +127,9 @@ apis:
   - type: Signup
     url: https://snap.michaelcli.com/api/signup
 common:
+  - type: CapabilityMap
+    url: capabilities/snapapi-capability-edges.yml
+    name: SnapAPI Business Capability Map
   - type: AgenticAccess
     url: agentic-access/snapapi-agentic-access.yml
   - type: DomainSecurity
